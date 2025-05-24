@@ -1,0 +1,23 @@
+@model List<NewsPortalMVC.Models.Feedback>
+
+<h2>Historial de Votos</h2>
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>Post ID</th>
+            <th>Sentimiento</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+            <tr>
+                <td>@f.PostId</td>
+                <td>@f.Sentimiento</td>
+                <td>@f.Fecha.ToLocalTime()</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,8 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<NewsPortalMVC.Models.PostEnriched>
+@using NewsPortalMVC.Models
+
+<h2>Noticias</h2>
+
+@if (TempData["Msg"] != null)
+{
+    <div style="background-color:#d4edda; padding: 10px;">@TempData["Msg"]</div>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@foreach (var item in Model)
+{
+    <div style="border:1px solid #ccc; padding:15px; margin-bottom:20px;">
+        <h3>@item.Post.Title</h3>
+        <p>@item.Post.Body</p>
+        <p><strong>Autor:</strong> @item.User.Name (@item.User.Email)</p>
+
+        <form method="post" asp-action="React">
+            <input type="hidden" name="postId" value="@item.Post.Id" />
+            <button name="sentimiento" value="like">👍 Me gustó</button>
+            <button name="sentimiento" value="dislike">👎 No me gustó</button>
+        </form>
+
+        <h5>Comentarios</h5>
+        <ul>
+            @foreach (var c in item.Comments.Take(3))
+            {
+                <li><b>@c.Email:</b> @c.Body</li>
+            }
+        </ul>
+    </div>
+}
