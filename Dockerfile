@@ -3,17 +3,16 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
 COPY *.sln .
-COPY NewsPortalMVC/*.csproj ./NewsPortalMVC/
+COPY *.csproj .  # porque el .csproj está en la raíz
 RUN dotnet restore
 
 COPY . .
-WORKDIR /app/NewsPortalMVC
 RUN dotnet publish -c Release -o out
 
 # Stage 2: run
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
-COPY --from=build /app/NewsPortalMVC/out .
+COPY --from=build /app/out .
 
 ENV ASPNETCORE_URLS=http://+:80
 EXPOSE 80
