@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
 
 COPY *.sln .
-COPY *.csproj .  # porque el .csproj está en la raíz
+COPY *.csproj .
 RUN dotnet restore
 
 COPY . .
